@@ -1,17 +1,19 @@
-/*********** Урок 16: Тип возвращаемого значения метода ************/
+/*********** Урок 17: Методы. Параметры метода ************/
 
- /*
-    В Java тип возвращаемого значения метода указывается перед именем метода и определяет,
-    какой тип данных метод возвращает после выполнения.
- */
-
+/*
+    Параметры метода в Java передаются в круглых скобках после имени метода.
+    Они позволяют передать значения внутрь метода при его вызове.
+*/
 public class Classes_and_Objects {
     public static void main(String[] args) {
         Person person = new Person();
-        person.name = "Вова";
-        person.age = 18;
-        int years = person.calculateYearsToRetirement();
-        System.out.println("Вове до пенсии "+ years + " лет"); 
+        person.setName("John");
+        System.out.println(person.name); //John
+
+        Person person2 = new Person();
+        person2.setNameAndAge("Max", 22);
+        System.out.println("My name is " + person2.name + " and i'm " + person2.age); // My name is Max and i'm 22
+
 
     }
 
@@ -22,10 +24,18 @@ class Person {
     int age;
 
 
-    // Метод возвращает целое число
-    int calculateYearsToRetirement(){
-        int years = 65-age;
-        return years;
+
+    /*
+    Каждый параметр должен иметь тип данных и имя. Тип указывает, какого типа данные метод ожидает,
+    а имя используется внутри метода для доступа к переданным значениям.
+    */
+    void setName(String newName) {
+        name = newName;
     }
 
+    // Метод с двумя параметрами: String и int
+    void setNameAndAge(String newName, int newAge) {
+        name = newName;
+        age = newAge;
+    }
 }
