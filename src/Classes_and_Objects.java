@@ -1,13 +1,18 @@
-/*********** Урок 15: Методы в Java ************/
+/*********** Урок 16: Тип возвращаемого значения метода ************/
 
+ /*
+    В Java тип возвращаемого значения метода указывается перед именем метода и определяет,
+    какой тип данных метод возвращает после выполнения.
+ */
 
 public class Classes_and_Objects {
     public static void main(String[] args) {
+        Person person = new Person();
+        person.name = "Вова";
+        person.age = 18;
+        int years = person.calculateYearsToRetirement();
+        System.out.println("Вове до пенсии "+ years + " лет"); 
 
-        Person person1 = new Person();
-        person1.name = "John";
-        person1.age = 18;
-        person1.speak();
     }
 
 }
@@ -16,14 +21,11 @@ class Person {
     String name;
     int age;
 
-    // Мы создали метод speak. Согласно конвенции название методов начинается с маленькой буквы.
-    void speak(){
-        /*
-        Поля и методы знают о существовании друг друга,
-        поэтому достаточно внутри метода ввести название поля
-         */
-        System.out.println("Меня зовут "+ name+ ", мне "+ age + " лет");
-    }
 
+    // Метод возвращает целое число
+    int calculateYearsToRetirement(){
+        int years = 65-age;
+        return years;
+    }
 
 }
