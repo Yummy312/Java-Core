@@ -1,35 +1,29 @@
-/*********** Урок 14 ************/
+/*********** Урок 15: Методы в Java ************/
 
 
-/*
-   Если перед ключевым словом class стоит ключевое слово public, то это публичный класс.
-   В Java можно иметь только один публичный класс в одном файле, и имя этого класса должно совпадать
-   с именем файла.
-
-   Публичный класс (класс с модификатором public) может быть доступен из любого другого класса или пакета.
-
- */
 public class Classes_and_Objects {
-    // Публичный класс
-
     public static void main(String[] args) {
 
-        // Создание объекта
-        HelperClass1 helperClass1 = new HelperClass1();
-        helperClass1.name="sss";
-        System.out.println(helperClass1.name);
-
-
+        Person person1 = new Person();
+        person1.name = "John";
+        person1.age = 18;
+        person1.speak();
     }
 
 }
 
-// В одном Java файле может быть сколько угодно обычных классов.
-class HelperClass1 {
+class Person {
     String name;
-}
+    int age;
 
-class HelperClass2 {
-    String name;
-}
+    // Мы создали метод speak. Согласно конвенции название методов начинается с маленькой буквы.
+    void speak(){
+        /*
+        Поля и методы знают о существовании друг друга,
+        поэтому достаточно внутри метода ввести название поля
+         */
+        System.out.println("Меня зовут "+ name+ ", мне "+ age + " лет");
+    }
 
+
+}
