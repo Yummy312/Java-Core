@@ -1,83 +1,83 @@
-import java.io.FileReader;
-import java.io.IOException;
-
-/*********** Урок 36: Исключения ************/
+/*********** Урок 37: Вложенные классы ************/
 
 /*
-    Исключения в Java — это механизмы обработки ошибок, которые позволяют программе реагировать
-    на неожиданные ситуации, возникающие во время выполнения. Исключения в Java разделяются
-    на два типа: проверяемые (checked) и непроверяемые (unchecked).
+Вложенные классы в Java — это классы, которые объявляются внутри другого класса.
+Они используются для логической группировки классов, которые тесно связаны друг с другом.
+Вложенные классы могут быть статическими или нестатическими. Рассмотрим их подробнее:
 
-    Проверяемые исключения (Checked exceptions): Это исключения, которые возникают во время компиляции кода и они
-    должны быть либо обработаны, либо указаны в сигнатуре метода с использованием ключевого слова throws.
-    Примеры: IOException, SQLException, ClassNotFoundException
-    Все проверяемые исключения происходят от класса Exception.
-
-    Непроверяемые исключения (Unchecked exceptions): Это исключения возникают во время выполнения программы
-    и не требуют обязательной обработки (catch или указания в блоке throws).
-    Эти исключения, которые наследуются от RuntimeException, примеры: NullPointerException,
-    ArrayIndexOutOfBoundsException.
-
-    ___Обработка исключений в Java(Блоки try-catch)___
-    try: В этом блоке размещается код, который может вызвать исключение.
-    catch: Этот блок перехватывает исключения, которые были выброшены в блоке try. В нем можно обработать исключение.
-    finally: Этот блок выполняется всегда, независимо от того, было ли выброшено исключение или нет.
-    Обычно используется для освобождения ресурсов, таких как закрытие файлов или соединений.
-
-    Ключевые слова throw и throws используются для работы с исключениями в Java.
-    Throw используется для выброса исключения в блоке кода, а throws используется в объявлении метода,
-    чтобы указать, что метод может выбросить определенный тип исключения.
-
+Когда использовать вложенные классы:
+Когда есть логическая зависимость между классами.
+Когда один класс используется только внутри другого класса.
+Когда нужно избежать "загрязнения" пространства имен.
 */
 public class Classes_and_Objects {
 
-     /*
-        Метод, который может выбросить исключение IOException с помощью ключевого слова throws.
-        Это требуется для проверяемых исключений. Это позволяет передать ответственность за обработку
-        исключения вызывающему коду.
-      */
-    public static void readFile(String filename) throws IOException {
-        FileReader file = new FileReader(filename);
-        file.close();
-    }
-
-
     public static void main(String[] args) {
 
-        // Пример обработки исключения:
-        try {
-            int result = 10 / 0;  // Деление на ноль
-        } catch (ArithmeticException e) {
-            System.out.println("Ошибка: Деление на ноль");
-        } finally {
-            System.out.println("Этот блок выполнится всегда");
-        }
+        // Статические вложенные классы
+        OuterClass.NestedStaticClass nested = new OuterClass.NestedStaticClass();
+        nested.display();
 
+        // Внутренние классы (non-static inner class):
+        Car car = new Car();
+        Car.InnerCar innerCar = car. new InnerCar();
+        innerCar.display();
 
-        try {
-            readFile("example.txt");
-        } catch (IOException e) {
-            System.out.println("Ошибка при чтении файла");
-        }
+        // Локальные классы
+        Person person = new Person();
+        person.methodWithLocalClass();
 
-
-        try {
-            throw new MyException("Это мое исключение");
-        } catch (MyException e) {
-            System.out.println("Поймано исключение: " + e.getMessage());
-        }
 
     }
 }
 
 
-/*
-    В Java можно создавать собственные исключения, расширяя класс Exception или RuntimeException.
-    Это полезно, если вам нужно обработать специфические ошибки, связанные с вашей логикой.
-*/
-class MyException extends Exception {
-    public MyException(String message) {
-        super(message);
+//Статические вложенные классы (static nested class):
+
+//Объявляются с ключевым словом static.
+//Могут обращаться только к статическим членам внешнего класса.
+//Не требуют экземпляра внешнего класса для создания объекта.
+
+class OuterClass {
+    static class NestedStaticClass {
+        void display() {
+            System.out.println("Это статический вложенный класс");
+        }
     }
 }
 
+
+//Внутренние классы (non-static inner class):
+
+//Не объявляются с ключевым словом static.
+//Имеют доступ к членам внешнего класса, включая приватные.
+//Для создания объекта внутреннего класса требуется объект внешнего класса.
+class Car {
+    public String msg ="code";
+    class InnerCar {
+        void display() {
+            System.out.println("Это внутренний класс");
+        }
+    }
+}
+
+
+//Локальные классы (local class):
+
+//Объявляются внутри метода или блока кода.
+//Имеют доступ ко всем полям и методам внешнего класса,
+//а также к переменным метода, если они являются final или "эффективно финальными".
+
+class Person {
+    void methodWithLocalClass() {
+        class LocalClass {
+            void display() {
+                System.out.println("Это локальный класс");
+            }
+        }
+        LocalClass localClass = new LocalClass();
+        localClass.display();
+
+
+    }
+}
